@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  before_filter :authorize_user
+  
   # GET /categories
   # GET /categories.json
   def index
@@ -41,15 +43,13 @@ class CategoriesController < ApplicationController
   # POST /categories.json
   def create
     @category = Category.new(params[:category])
-
-    respond_to do |format|
-      if @category.save
-        format.html { redirect_to @category, notice: 'Category was successfully created.' }
-        format.json { render json: @category, status: :created, location: @category }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
+    @category.user_id = current_user.id
+    
+    begin
+      @category.save
+      redirect_to @category, notice: 'Category was successfully created.'
+    rescue ActiveRecord::StatementInvalid
+      redirect_to new_category_url , notice: 'Category already exists.'
     end
   end
 

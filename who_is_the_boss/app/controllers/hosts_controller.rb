@@ -1,4 +1,5 @@
 class HostsController < ApplicationController
+  before_filter :authorize_user
   # GET /hosts
   # GET /hosts.json
   def index
@@ -41,15 +42,13 @@ class HostsController < ApplicationController
   # POST /hosts.json
   def create
     @host = Host.new(params[:host])
-
-    respond_to do |format|
-      if @host.save
-        format.html { redirect_to @host, notice: 'Host was successfully created.' }
-        format.json { render json: @host, status: :created, location: @host }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @host.errors, status: :unprocessable_entity }
-      end
+    @host.user_id = current_user.id
+    
+    begin
+      @host.save
+      redirect_to @host, notice: 'Host was successfully created.'
+    rescue ActiveRecord::StatementInvalid
+      redirect_to new_host_url , notice: 'Host already exists.'
     end
   end
 

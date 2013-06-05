@@ -6,13 +6,16 @@
 </p>
 
 <p>
-  <b>Member:</b>
-  <%= @host.member %>
+  <b>Members:</b>
+  <% @host.members.each do |m| %>
+	<%= m.id %><br/>
+  <% end %>
+  
 </p>
 
 <p>
   <b>Category:</b>
-  <%= @host.category %>
+  <%= @host.category.name %>
 </p>
 
 

@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Member</th>
+    <th>Number of Members</th>
     <th>Category</th>
     <th></th>
     <th></th>
@@ -13,8 +13,8 @@
 <% @hosts.each do |host| %>
   <tr>
     <td><%= host.name %></td>
-    <td><%= host.member %></td>
-    <td><%= host.category %></td>
+    <td><%= "TODO" %></td>
+    <td><%= host.category.name %></td>
     <td><%= link_to 'Show', host %></td>
     <td><%= link_to 'Edit', edit_host_path(host) %></td>
     <td><%= link_to 'Destroy', host, method: :delete, data: { confirm: 'Are you sure?' } %></td>

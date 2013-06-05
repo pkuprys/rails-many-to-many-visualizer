@@ -12,17 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br/>
     <%= f.text_field :name %>
   </div>
+  
   <div class="field">
-    <%= f.label :member %><br />
-    <%= f.text_field :member %>
+  <%= f.label :category_id %><br/>
+  <%= f.collection_select :category_id,
+                          Category.all,
+                          :id,
+                          :name %>
   </div>
-  <div class="field">
-    <%= f.label :category %><br />
-    <%= f.text_field :category %>
-  </div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

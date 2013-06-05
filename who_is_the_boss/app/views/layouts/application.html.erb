@@ -7,8 +7,19 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if session[:user_id].present? %>
+  	<h2 align="center"><%=link_to "Hosts", hosts_url%> |
+  		<%=link_to "Categories", categories_url%> |
+  		<%=link_to "Members", members_url%> |
+  		<%=link_to "Users", users_url%></h2>
+    <p>Welcome back, <%= current_user.email %>. <%= link_to "Sign Out", session_url, method: 'delete' %></p>
+  <% else %>
+    <p><%= link_to "Sign Up", new_user_url %> or <%= link_to "Sign In", new_session_url %></p>
+  <% end %>
 
-<%= yield %>
+  <p><%= notice %></p>
+
+  <%= yield %>
 
 </body>
 </html>

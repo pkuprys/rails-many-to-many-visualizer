@@ -11,27 +11,47 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130520002534) do
+ActiveRecord::Schema.define(:version => 20130605201847) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
+
+  add_index "categories", ["name", "user_id"], :name => "index_categories_on_name_and_user_id"
 
   create_table "hosts", :force => true do |t|
     t.string   "name"
-    t.string   "member"
-    t.string   "category"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "category_id"
+    t.integer  "membership_id"
+    t.integer  "user_id"
   end
+
+  add_index "hosts", ["name", "user_id"], :name => "index_hosts_on_name_and_user_id"
 
   create_table "members", :force => true do |t|
     t.string   "name"
-    t.string   "host"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "membership_id"
+    t.integer  "user_id"
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "host_id"
+    t.integer  "member_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string "email"
+    t.string "password_digest"
   end
 
 end

@@ -1,11 +1,37 @@
 WhoIsTheBoss::Application.routes.draw do
-  resources :categories
+  
+  # Routes for the User resource:
+  # CREATE
+  get '/users/new', controller: 'users', action: 'new', as: 'new_user'
+  post '/users', controller: 'users', action: 'create'
 
+  # READ
+  get '/users', controller: 'users', action: 'index', as: 'users'
+  get '/users/:id', controller: 'users', action: 'show', as: 'user'
+
+  # UPDATE
+  get '/users/:id/edit', controller: 'users', action: 'edit', as: 'edit_user'
+  put '/users/:id', controller: 'users', action: 'update'
+
+  # DELETE
+  delete '/users/:id', controller: 'users', action: 'destroy'
+  #------------------------------
+  
+  # Routes for Session resource:
+  get '/sessions/new' => 'sessions#new', as: 'new_session'
+  post '/sessions' => 'sessions#create', as: 'sessions'
+  delete '/sessions' => 'sessions#destroy', as: 'session'
+  
+
+  resources :categories
 
   resources :hosts
 
-
   resources :members
+  
+  root :to => 'hosts#index', as: 'index'
+  get '/index' => 'hosts#index'
+  get '/index.html' => 'hosts#index'
 
 
   # The priority is based upon order of creation:
