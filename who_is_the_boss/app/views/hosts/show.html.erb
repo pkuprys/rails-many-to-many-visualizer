@@ -6,18 +6,16 @@
 </p>
 
 <p>
-  <b>Members:</b>
-  <% @host.members.each do |m| %>
-	<%= m.id %><br/>
-  <% end %>
-  
-</p>
-
-<p>
   <b>Category:</b>
   <%= @host.category.name %>
 </p>
 
+<p>
+  <b>Members:</b>
+  <% @host.members.each do |m| %>
+	<br/><%= m.name %>
+  <% end %>
+</p>
 
 <%= link_to 'Edit', edit_host_path(@host) %> |
 <%= link_to 'Back', hosts_path %>

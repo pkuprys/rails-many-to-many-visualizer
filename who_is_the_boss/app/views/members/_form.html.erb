@@ -12,9 +12,17 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br/>
     <%= f.text_field :name %>
   </div>
+  
+<div>
+    <%= f.label :hosts %><br/>
+    <% Host.where(:user_id => current_user.id).order("lower(name)").each do |host| %>
+      <%= check_box_tag :host_ids, host.id, @member.hosts.include?(host), :name => 'member[host_ids][]' %><%= host.name %></br>
+    <% end %>
+</div></br>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -1,9 +1,14 @@
 class HostsController < ApplicationController
   before_filter :authorize_user
+
+  def members
+    
+  end
+
   # GET /hosts
   # GET /hosts.json
   def index
-    @hosts = Host.all
+    @hosts = Host.where(:user_id => current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb

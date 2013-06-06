@@ -5,6 +5,13 @@
   <%= @member.name %>
 </p>
 
+<p>
+  <b>Hosted by:</b>
+  <% @member.hosts.each do |host| %></br>
+    <%= host.name %>
+  <% end %>
+</p>
+
 
 
 <%= link_to 'Edit', edit_member_path(@member) %> |

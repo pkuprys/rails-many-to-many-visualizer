@@ -13,7 +13,7 @@
 <% @hosts.each do |host| %>
   <tr>
     <td><%= host.name %></td>
-    <td><%= "TODO" %></td>
+    <td><%= host.members.count %></td>
     <td><%= host.category.name %></td>
     <td><%= link_to 'Show', host %></td>
     <td><%= link_to 'Edit', edit_host_path(host) %></td>

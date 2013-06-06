@@ -19,7 +19,7 @@
   <div class="field">
   <%= f.label :category_id %><br/>
   <%= f.collection_select :category_id,
-                          Category.all,
+                          Category.where(:user_id => current_user.id),
                           :id,
                           :name %>
   </div>

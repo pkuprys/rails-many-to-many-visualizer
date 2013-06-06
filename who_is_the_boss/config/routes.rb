@@ -25,13 +25,16 @@ WhoIsTheBoss::Application.routes.draw do
 
   resources :categories
 
+  get'/hosts/members' => 'hosts#members'
   resources :hosts
 
+  get'/members/hosts' => 'members#hosts'
   resources :members
   
   root :to => 'hosts#index', as: 'index'
   get '/index' => 'hosts#index'
   get '/index.html' => 'hosts#index'
+  
 
 
   # The priority is based upon order of creation:

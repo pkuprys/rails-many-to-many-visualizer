@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :authorize_user, :except => [:create, :new]
 
   def index
-    @users = User.all
+    @users = User.where(:id => current_user.id)
   end
 
   def show
