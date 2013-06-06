@@ -1,5 +1,7 @@
 <h1>Listing members</h1>
 
+<%= link_to 'New Member', new_member_path %>
+</br>
 <table>
   <tr>
     <th>Name</th>
@@ -20,9 +22,6 @@
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Member', new_member_path %>
 </br></br>
 <h2>Graphs</h2>
 <%=link_to 'Members By Host - Arc', graph_members_path(:hosts, :arc) %>

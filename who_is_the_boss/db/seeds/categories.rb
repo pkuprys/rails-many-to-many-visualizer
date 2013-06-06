@@ -1,0 +1,5 @@
+Category.create(:id => 13, :name => "Services", :user_id => 5)
+Category.create(:id => 14, :name => "Basic Materials", :user_id => 5)
+Category.create(:id => 15, :name => "Industrial Goods", :user_id => 5)
+Category.create(:id => 16, :name => "Consumer Goods", :user_id => 5)
+Category.create(:id => 17, :name => "Financial", :user_id => 5)
