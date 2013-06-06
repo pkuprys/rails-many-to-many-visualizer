@@ -1,6 +1,13 @@
 class CategoriesController < ApplicationController
   before_filter :authorize_user
   
+  def graph
+    slice = params[:slice]
+    view = params[:view]
+    @message = getMessage "categories", slice, view
+    @graph = getGraph "categories", slice, view
+  end
+  
   # GET /categories
   # GET /categories.json
   def index

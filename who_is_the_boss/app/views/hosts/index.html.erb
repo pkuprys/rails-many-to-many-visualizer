@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Number of Members</th>
+    <th># of Members</th>
     <th>Category</th>
     <th></th>
     <th></th>
@@ -25,3 +25,8 @@
 <br />
 
 <%= link_to 'New Host', new_host_path %>
+</br></br>
+<h2>Graphs</h2>
+<%=link_to 'Hosts By Member - Arc', graph_hosts_path(:members, :arc) %>
+</br>
+<%=link_to 'Hosts By Member - Matrix', graph_hosts_path(:members, :matrix) %>

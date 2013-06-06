@@ -1,8 +1,11 @@
 class MembersController < ApplicationController
   before_filter :authorize_user
   
-  def hosts
-    
+  def graph
+    slice = params[:slice]
+    view = params[:view]
+    @message = getMessage "members", slice, view
+    @graph = getGraph "members", slice, view
   end
 
   # GET /members

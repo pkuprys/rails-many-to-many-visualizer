@@ -6,11 +6,31 @@ class ApplicationController < ActionController::Base
   helper_method :authorize_user
   helper_method :current_user
   helper_method :signed_in?
-  helper_method :drawBar
-  helper_method :drawArc
-  helper_method :drawMatrix
-  helper_method :hostsLinkedByMembers
-  helper_method :membersLinkedByHosts
+  helper_method :getMessage
+  helper_method :getGraph
+  
+  @@messageFragments = {"hosts"=>"Hosts", 
+                      "members"=>"Members", 
+                      "categories"=>"Categories",
+                      "arc"=>"are linked by an arc",
+                      "matrix"=>"have their intersection colored"
+                      }
+                      
+  @@topicSliceMethods = {"hosts"=>{"members"=>"hostsLinkedByMembers"},
+                         "members"=>{"hosts"=>"membersLinkedByHosts"},
+                         "categories"=>{"members"=>"categoriesLinkedByMembers"}
+                         }
+                      
+  def getMessage topic, slice, view
+    return "#{@@messageFragments[topic]} that share #{@@messageFragments[slice]} #{@@messageFragments[view]}."
+  end
+  
+  def getGraph topic, slice, view
+    method = @@topicSliceMethods[topic][slice]
+    data = self.send(method)
+    graph = self.send(view, data)
+    return graph
+  end
   
   def current_user
     return @current_user ||= User.find_by_id(session[:user_id])
@@ -25,25 +45,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def drawBar
-    vis = Rubyvis::Panel.new do 
-    width 150
-    height 150
-
-    bar do
-      data [1, 1.2, 1.7, 1.5, 0.7, 0.3]
-      width 20
-      height {|d| d * 80}
-      bottom(0)
-      left {index * 25}
-      end   
-    end
-
-    vis.render
-    vis.to_svg   
-  end
-  
-  def drawTree
+  def tree
     vis = Rubyvis::Panel.new().width(800).height(800).left(0).right(0).top(0).bottom(0)
 
     tree = vis.add(Rubyvis::Layout::Tree).nodes(Rubyvis.dom(files).root("rubyvis").nodes()).orient('radial').depth(85).breadth(12)
@@ -61,8 +63,8 @@ class ApplicationController < ActionController::Base
     vis.to_svg
   end
   
-  def drawArc data
-    c=Rubyvis::Colors.category19()
+  def arc data
+    c=Rubyvis::Colors.category10()
     
     vis = Rubyvis::Panel.new() do
       width 1000
@@ -89,13 +91,13 @@ class ApplicationController < ActionController::Base
     vis.to_svg
   end
   
-  def drawMatrix data
-    color=Rubyvis::Colors.category19
+  def matrix data
+    color=Rubyvis::Colors.category10
     vis = Rubyvis::Panel.new() do 
-      width 693
-      height 693
-      top 90
-      left 90
+      width 500
+      height 500
+      top 100
+      left 100
       layout_matrix do
         nodes data.nodes
         links data.links
@@ -150,7 +152,7 @@ class ApplicationController < ActionController::Base
     memberIdsToIndices = {}
     index = 0
     members.each do |m|
-      memberNodes.push(OpenStruct.new({:node_value=>m.name, :group=>1}))
+      memberNodes.push(OpenStruct.new({:node_value=>m.name, :group=>m.hosts.count}))
       memberIdsToIndices[m.id] = index
       index+=1
     end
@@ -170,5 +172,27 @@ class ApplicationController < ActionController::Base
     end
     
     return OpenStruct.new({:nodes=>memberNodes, :links=>memberLinks})
+  end
+  
+  def categoriesLinkedByMembers
+    cats = Category.where(:user_id => current_user.id)
+    catNodes = []
+    catIdsToIndices = {}
+    index = 0
+    cats.each do |c|
+      catNodes.push(OpenStruct.new({:node_value=>c.name, :group=>c.id}))
+      catIdsToIndices[c.id] = index
+      index+=1
+    end
+    
+    catLinks = []
+    hmData = hostsLinkedByMembers
+    hmData.links.each do |hLink|
+      source = hmData.nodes[hLink.source].group
+      target = hmData.nodes[hLink.target].group
+      catLinks.push(OpenStruct.new({:source=>catIdsToIndices[source], :target=>catIdsToIndices[target], :value=>1}))
+    end    
+        
+    return OpenStruct.new({:nodes=>catNodes, :links=>catLinks})
   end
 end

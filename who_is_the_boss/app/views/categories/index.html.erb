@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Number of Hosts</th>
+    <th># of Hosts</th>
     <th></th>
     <th></th>
     <th></th>
@@ -23,3 +23,8 @@
 <br />
 
 <%= link_to 'New Category', new_category_path %>
+</br></br>
+<h2>Graphs</h2>
+<%=link_to 'Categories By Members - Arc', graph_categories_path(:members, :arc) %>
+</br>
+<%=link_to 'Categories By Members - Matrix', graph_categories_path(:members, :matrix) %>

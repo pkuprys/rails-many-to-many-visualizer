@@ -22,13 +22,13 @@ WhoIsTheBoss::Application.routes.draw do
   post '/sessions' => 'sessions#create', as: 'sessions'
   delete '/sessions' => 'sessions#destroy', as: 'session'
   
-
+  get'/categories/graph/:slice/:view' => 'categories#graph', as: 'graph_categories'
   resources :categories
 
-  get'/hosts/members' => 'hosts#members'
+  get'/hosts/graph/:slice/:view' => 'hosts#graph', as: 'graph_hosts'
   resources :hosts
 
-  get'/members/hosts' => 'members#hosts'
+  get'/members/graph/:slice/:view' => 'members#graph', as: 'graph_members'
   resources :members
   
   root :to => 'hosts#index', as: 'index'
