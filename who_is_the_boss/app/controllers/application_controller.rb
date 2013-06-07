@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     c=Rubyvis::Colors.category10()
     
     vis = Rubyvis::Panel.new() do
-      width 1000
+      width 1200
       height 500
       bottom 120
       layout_arc do
@@ -94,8 +94,8 @@ class ApplicationController < ActionController::Base
   def matrix data
     color=Rubyvis::Colors.category10
     vis = Rubyvis::Panel.new() do 
-      width 500
-      height 500
+      width 1200
+      height 1200
       top 100
       left 100
       layout_matrix do
@@ -152,7 +152,13 @@ class ApplicationController < ActionController::Base
     memberIdsToIndices = {}
     index = 0
     members.each do |m|
-      memberNodes.push(OpenStruct.new({:node_value=>m.name, :group=>m.hosts.count}))
+      mHosts = m.hosts
+      if mHosts.count > 1
+        group = 1
+      else
+        group = mHosts[0].id
+      end
+      memberNodes.push(OpenStruct.new({:node_value=>m.name, :group=>group}))
       memberIdsToIndices[m.id] = index
       index+=1
     end

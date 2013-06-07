@@ -1,7 +1,13 @@
-<h1>Listing members</h1>
-
-<%= link_to 'New Member', new_member_path %>
+<h1>Members</h1>
+<br/>
+<h2>Graphs</h2>
+<%=link_to 'Members By Host - Arc', graph_members_path(:hosts, :arc) %>
 </br>
+<%=link_to 'Members By Host - Matrix', graph_members_path(:hosts, :matrix) %>
+</br>
+</br>
+
+<h2>Listing</h2>
 <table>
   <tr>
     <th>Name</th>
@@ -22,8 +28,5 @@
 <% end %>
 </table>
 
-</br></br>
-<h2>Graphs</h2>
-<%=link_to 'Members By Host - Arc', graph_members_path(:hosts, :arc) %>
 </br>
-<%=link_to 'Members By Host - Matrix', graph_members_path(:hosts, :matrix) %>
+<%= link_to 'New Member', new_member_path %>

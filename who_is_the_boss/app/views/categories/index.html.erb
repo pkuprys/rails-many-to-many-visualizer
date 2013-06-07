@@ -1,5 +1,13 @@
-<h1>Listing categories</h1>
+<h1>Categories</h1>
+<br/>
+<h2>Graphs</h2>
+<%=link_to 'Categories By Members - Arc', graph_categories_path(:members, :arc) %>
+</br>
+<%=link_to 'Categories By Members - Matrix', graph_categories_path(:members, :matrix) %>
+</br>
+</br>
 
+<h2>Listing</h2>
 <table>
   <tr>
     <th>Name</th>
@@ -23,8 +31,3 @@
 <br />
 
 <%= link_to 'New Category', new_category_path %>
-</br></br>
-<h2>Graphs</h2>
-<%=link_to 'Categories By Members - Arc', graph_categories_path(:members, :arc) %>
-</br>
-<%=link_to 'Categories By Members - Matrix', graph_categories_path(:members, :matrix) %>
