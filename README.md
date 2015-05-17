@@ -1,1 +1,1 @@
-Rails Project for graphing many to one relationships
+Rails Project for graphing many to many relationships
